@@ -64,21 +64,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
     if (menuToggle) {
         menuToggle.addEventListener('click', () => {
-            // Simple toggle for now. In a real app we'd add proper classes and transitions.
-            if (navLinks.style.display === 'flex') {
-                navLinks.style.display = 'none';
-            } else {
-                navLinks.style.display = 'flex';
-                navLinks.style.flexDirection = 'column';
-                navLinks.style.position = 'absolute';
-                navLinks.style.top = '100%';
-                navLinks.style.left = '0';
-                navLinks.style.width = '100%';
-                navLinks.style.backgroundColor = 'var(--bg-dark)';
-                navLinks.style.padding = '2rem';
-                navLinks.style.gap = '2rem';
-                navLinks.style.borderBottom = '1px solid rgba(255,255,255,0.1)';
-            }
+            navLinks.classList.toggle('active');
+            menuToggle.classList.toggle('active');
         });
     }
 
@@ -88,8 +75,9 @@ document.addEventListener('DOMContentLoaded', () => {
             e.preventDefault();
             
             // Close mobile menu if open
-            if (window.innerWidth <= 768 && navLinks) {
-                navLinks.style.display = 'none';
+            if (navLinks && navLinks.classList.contains('active')) {
+                navLinks.classList.remove('active');
+                if (menuToggle) menuToggle.classList.remove('active');
             }
 
             const targetId = this.getAttribute('href');
