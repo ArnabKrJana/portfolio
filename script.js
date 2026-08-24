@@ -1,4 +1,19 @@
 document.addEventListener('DOMContentLoaded', () => {
+    // Initialize Vanta Halo Background
+    if (typeof VANTA !== 'undefined' && VANTA.HALO) {
+        VANTA.HALO({
+            el: "#vanta-bg",
+            mouseControls: true,
+            touchControls: true,
+            gyroControls: false,
+            minHeight: 200.00,
+            minWidth: 200.00,
+            baseColor: 0xe7edec,
+            backgroundColor: 0x111114,
+            size: 2.50
+        });
+    }
+
     // Scroll reveal animation using Intersection Observer
     const observerOptions = {
         root: null,
