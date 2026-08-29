@@ -1,17 +1,42 @@
 document.addEventListener('DOMContentLoaded', () => {
-    // Initialize Vanta Halo Background
-    if (typeof VANTA !== 'undefined' && VANTA.HALO) {
-        VANTA.HALO({
-            el: "#vanta-bg",
-            mouseControls: true,
-            touchControls: true,
-            gyroControls: false,
-            minHeight: 200.00,
-            minWidth: 200.00,
-            baseColor: 0xe7edec,
-            backgroundColor: 0x111114,
-            size: 2.50
-        });
+    // Manage Vanta Halo Background based on visibility to improve performance
+    let vantaEffect;
+    const initVanta = () => {
+        if (typeof VANTA !== 'undefined' && VANTA.HALO && !vantaEffect) {
+            vantaEffect = VANTA.HALO({
+                el: "#vanta-bg",
+                mouseControls: true,
+                touchControls: true,
+                gyroControls: false,
+                minHeight: 200.00,
+                minWidth: 200.00,
+                baseColor: 0xe5383b, // Strawberry Red
+                backgroundColor: 0x0b090a, // Onyx
+                size: 2.50
+            });
+        }
+    };
+
+    const destroyVanta = () => {
+        if (vantaEffect) {
+            vantaEffect.destroy();
+            vantaEffect = null;
+        }
+    };
+
+    const heroSection = document.getElementById('hero');
+    if (heroSection) {
+        const vantaObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    initVanta();
+                } else {
+                    destroyVanta();
+                }
+            });
+        }, { threshold: 0 });
+
+        vantaObserver.observe(heroSection);
     }
 
     // Scroll reveal animation using Intersection Observer
@@ -42,7 +67,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Custom Cursor Logic
     const cursor = document.querySelector('.custom-cursor');
-    
+
     // Use requestAnimationFrame for smoother cursor updates
     let mouseX = 0, mouseY = 0;
     let cursorX = 0, cursorY = 0;
@@ -53,7 +78,7 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     function animateCursor() {
-        if(cursor) {
+        if (cursor) {
             // Immediate tracking for zero lag
             cursorX = mouseX;
             cursorY = mouseY;
@@ -61,7 +86,7 @@ document.addEventListener('DOMContentLoaded', () => {
             requestAnimationFrame(animateCursor);
         }
     }
-    
+
     if (cursor) {
         animateCursor();
     }
@@ -88,7 +113,7 @@ document.addEventListener('DOMContentLoaded', () => {
     document.querySelectorAll('a[href^="#"]').forEach(anchor => {
         anchor.addEventListener('click', function (e) {
             e.preventDefault();
-            
+
             // Close mobile menu if open
             if (navLinks && navLinks.classList.contains('active')) {
                 navLinks.classList.remove('active');
@@ -108,9 +133,42 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     });
 
+    // ScrollSpy for navigation links
+    const navItemsList = document.querySelectorAll('.nav-links a');
+
+    window.addEventListener('scroll', () => {
+        let current = '';
+        navItemsList.forEach(a => {
+            const id = a.getAttribute('href');
+            if (id === '#') return;
+            const target = document.querySelector(id);
+            if (target) {
+                const rect = target.getBoundingClientRect();
+                if (rect.top <= 300) {
+                    current = id;
+                }
+            }
+        });
+
+        // If at the very bottom, force the last item to be active
+        if ((window.innerHeight + Math.round(window.scrollY)) >= document.body.offsetHeight - 100) {
+            const lastItem = navItemsList[navItemsList.length - 1];
+            if (lastItem) {
+                current = lastItem.getAttribute('href');
+            }
+        }
+
+        navItemsList.forEach(a => {
+            a.classList.remove('active');
+            if (current && a.getAttribute('href') === current) {
+                a.classList.add('active');
+            }
+        });
+    });
+
     // Scroll to Top logic
     const scrollTopBtn = document.getElementById('scrollTopBtn');
-    
+
     window.addEventListener('scroll', () => {
         if (window.scrollY > 400) {
             scrollTopBtn.classList.add('visible');
@@ -127,20 +185,20 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 });
 
-    // Copy Email logic
-    const copyEmailBtn = document.getElementById('copyEmailBtn');
-    if (copyEmailBtn) {
-        copyEmailBtn.addEventListener('click', () => {
-            navigator.clipboard.writeText('arnabkrjana2004@gmail.com').then(() => {
-                const originalHTML = copyEmailBtn.innerHTML;
-                copyEmailBtn.innerHTML = 'Copied!';
-                copyEmailBtn.style.borderRadius = '30px';
-                copyEmailBtn.style.fontSize = '0.9rem';
-                setTimeout(() => {
-                    copyEmailBtn.innerHTML = originalHTML;
-                    copyEmailBtn.style.borderRadius = '50%';
-                    copyEmailBtn.style.fontSize = '';
-                }, 2000);
-            });
+// Copy Email logic
+const copyEmailBtn = document.getElementById('copyEmailBtn');
+if (copyEmailBtn) {
+    copyEmailBtn.addEventListener('click', () => {
+        navigator.clipboard.writeText('arnabkrjana2004@gmail.com').then(() => {
+            const originalHTML = copyEmailBtn.innerHTML;
+            copyEmailBtn.innerHTML = 'Copied!';
+            copyEmailBtn.style.borderRadius = '30px';
+            copyEmailBtn.style.fontSize = '0.9rem';
+            setTimeout(() => {
+                copyEmailBtn.innerHTML = originalHTML;
+                copyEmailBtn.style.borderRadius = '50%';
+                copyEmailBtn.style.fontSize = '';
+            }, 2000);
         });
-    }
+    });
+}

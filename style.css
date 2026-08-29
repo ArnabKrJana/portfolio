@@ -1,11 +1,12 @@
 :root {
-    --bg-dark: #000000;
-    --text-light: #ffffff;
-    --text-muted: #888888;
-    --bg-light: #ffffff;
-    --text-dark: #000000;
-    --accent: #eeeeee;
-    --border-color: #000000;
+    --bg-dark: #0b090a; /* Onyx */
+    --text-light: #f5f3f4; /* White Smoke */
+    --text-muted: #b1a7a6; /* Silver */
+    --bg-light: #f5f3f4; /* White Smoke */
+    --text-dark: #0b090a; /* Onyx */
+    --accent: #e5383b; /* Strawberry Red */
+    --accent-dark: #ba181b; /* Mahogany Red 2 */
+    --border-color: #d3d3d3; /* Dust Grey */
 }
 
 * {
@@ -66,12 +67,12 @@ html {
 
 /* Background Container */
 .bg-container {
-    position: fixed;
+    position: absolute;
     top: 0;
     left: 0;
-    width: 100vw;
-    height: 100vh;
-    z-index: -1;
+    width: 100%;
+    height: 100%;
+    z-index: 0;
     background-color: var(--bg-dark);
 }
 
@@ -87,7 +88,7 @@ html {
     top: 0;
     width: 100%;
     z-index: 990;
-    background-color: rgba(0, 0, 0, 0.4);
+    background-color: rgba(11, 9, 10, 0.6);
     backdrop-filter: blur(12px);
     -webkit-backdrop-filter: blur(12px);
     border-bottom: 1px solid rgba(255, 255, 255, 0.05);
@@ -113,9 +114,10 @@ html {
     transition: color 0.3s ease;
 }
 
-.nav-links a:hover {
-    color: #fff;
-    text-shadow: 0 0 10px rgba(255, 255, 255, 0.3);
+.nav-links a:hover,
+.nav-links a.active {
+    color: var(--accent);
+    text-shadow: 0 0 10px rgba(229, 56, 59, 0.5);
 }
 
 .menu-toggle {
@@ -130,11 +132,14 @@ html {
     align-items: center;
     padding: 0 4rem;
     position: relative;
+    overflow: hidden;
 }
 
 .hero-content {
     max-width: 900px;
     margin-top: 5rem;
+    position: relative;
+    z-index: 1;
 }
 
 .hero-title {
@@ -143,7 +148,7 @@ html {
     line-height: 1.1;
     letter-spacing: -2px;
     margin-bottom: 1.5rem;
-    color: #fff;
+    color: var(--text-light);
     mix-blend-mode: difference;
 }
 
@@ -181,7 +186,7 @@ html {
 }
 
 .btn-primary:hover {
-    background-color: #fff;
+    background-color: var(--accent);
     transform: translateY(-2px);
     box-shadow: 0 5px 15px rgba(255, 255, 255, 0.2);
 }
@@ -264,7 +269,7 @@ html {
 .list-item:hover {
     padding-left: 2rem;
     padding-right: 2rem;
-    background-color: #f9f9f9;
+    background-color: rgba(229, 56, 59, 0.1);
     transform: scale(1.02);
     box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
     border-radius: 8px;
@@ -312,7 +317,7 @@ html {
 }
 
 .project-link:hover {
-    color: #666;
+    color: var(--accent-dark);
 }
 
 .badges {
@@ -322,8 +327,8 @@ html {
 }
 
 .badge {
-    background-color: #000;
-    color: #fff;
+    background-color: var(--bg-dark);
+    color: var(--text-light);
     font-size: 0.7rem;
     text-transform: uppercase;
     letter-spacing: 1px;
@@ -440,7 +445,7 @@ footer {
         top: 100%;
         left: 0;
         width: 100%;
-        background-color: rgba(0, 0, 0, 0.95);
+        background-color: rgba(11, 9, 10, 0.95);
         backdrop-filter: blur(12px);
         -webkit-backdrop-filter: blur(12px);
         padding: 2rem;
@@ -684,7 +689,7 @@ footer {
 }
 
 .scroll-top-btn:hover {
-    background-color: #ccc;
+    background-color: var(--accent);
     transform: translateY(-5px);
 }
 
