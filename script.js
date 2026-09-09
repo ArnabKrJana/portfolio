@@ -1,43 +1,4 @@
 document.addEventListener('DOMContentLoaded', () => {
-    // Manage Vanta Halo Background based on visibility to improve performance
-    let vantaEffect;
-    const initVanta = () => {
-        if (typeof VANTA !== 'undefined' && VANTA.HALO && !vantaEffect) {
-            vantaEffect = VANTA.HALO({
-                el: "#vanta-bg",
-                mouseControls: true,
-                touchControls: true,
-                gyroControls: false,
-                minHeight: 200.00,
-                minWidth: 200.00,
-                baseColor: 0xe5383b, // Strawberry Red
-                backgroundColor: 0x0b090a, // Onyx
-                size: 2.50
-            });
-        }
-    };
-
-    const destroyVanta = () => {
-        if (vantaEffect) {
-            vantaEffect.destroy();
-            vantaEffect = null;
-        }
-    };
-
-    const heroSection = document.getElementById('hero');
-    if (heroSection) {
-        const vantaObserver = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    initVanta();
-                } else {
-                    destroyVanta();
-                }
-            });
-        }, { threshold: 0 });
-
-        vantaObserver.observe(heroSection);
-    }
 
     // Scroll reveal animation using Intersection Observer
     const observerOptions = {

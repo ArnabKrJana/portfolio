@@ -4,8 +4,8 @@
     --text-muted: #b1a7a6; /* Silver */
     --bg-light: #f5f3f4; /* White Smoke */
     --text-dark: #0b090a; /* Onyx */
-    --accent: #e5383b; /* Strawberry Red */
-    --accent-dark: #ba181b; /* Mahogany Red 2 */
+    --accent: #0ea5e9; /* Sky Blue */
+    --accent-dark: #0284c7; /* Darker Sky Blue */
     --border-color: #d3d3d3; /* Dust Grey */
 }
 
@@ -76,6 +76,13 @@ html {
     background-color: var(--bg-dark);
 }
 
+.hero-bg-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    opacity: 0.3; /* Low opacity to ensure text is highly visible */
+}
+
 
 
 /* Navbar */
@@ -117,7 +124,7 @@ html {
 .nav-links a:hover,
 .nav-links a.active {
     color: var(--accent);
-    text-shadow: 0 0 10px rgba(229, 56, 59, 0.5);
+    text-shadow: 0 0 10px rgba(14, 165, 233, 0.5);
 }
 
 .menu-toggle {
@@ -269,7 +276,7 @@ html {
 .list-item:hover {
     padding-left: 2rem;
     padding-right: 2rem;
-    background-color: rgba(229, 56, 59, 0.1);
+    background-color: rgba(14, 165, 233, 0.1);
     transform: scale(1.02);
     box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
     border-radius: 8px;
