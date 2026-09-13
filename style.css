@@ -150,7 +150,7 @@ html {
 }
 
 .hero-title {
-    font-size: 5.5rem;
+    font-size: 5rem;
     font-weight: 500;
     line-height: 1.1;
     letter-spacing: -2px;
@@ -423,7 +423,7 @@ footer {
 /* Responsive */
 @media (max-width: 1024px) {
     .hero-title {
-        font-size: 4.5rem;
+        font-size: 4rem;
     }
 
     .section-title {
@@ -508,7 +508,7 @@ footer {
     }
 
     .hero-title {
-        font-size: 3.5rem;
+        font-size: 3rem;
         margin-bottom: 1rem;
     }
     
@@ -586,7 +586,7 @@ footer {
 
 @media (max-width: 480px) {
     .hero-title {
-        font-size: 2.75rem;
+        font-size: 2.5rem;
     }
     
     .hero-subtitle {
