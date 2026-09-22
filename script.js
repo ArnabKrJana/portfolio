@@ -127,14 +127,21 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     });
 
-    // Scroll to Top logic
+    // Scroll to Top and Navbar logic
     const scrollTopBtn = document.getElementById('scrollTopBtn');
+    const navbar = document.querySelector('.navbar');
 
     window.addEventListener('scroll', () => {
         if (window.scrollY > 400) {
             scrollTopBtn.classList.add('visible');
         } else {
             scrollTopBtn.classList.remove('visible');
+        }
+
+        if (window.scrollY > 50) {
+            navbar.classList.add('scrolled');
+        } else {
+            navbar.classList.remove('scrolled');
         }
     });
 
@@ -144,6 +151,32 @@ document.addEventListener('DOMContentLoaded', () => {
             behavior: 'smooth'
         });
     });
+    
+    // Theme Toggle Logic
+    const themeToggle = document.getElementById('theme-toggle');
+    const rootElement = document.documentElement; // html tag
+
+    // Check for saved theme preference, otherwise check system preference
+    const savedTheme = localStorage.getItem('theme');
+    if (savedTheme === 'light') {
+        rootElement.setAttribute('data-theme', 'light');
+    } else if (savedTheme === 'dark') {
+        rootElement.removeAttribute('data-theme');
+    } else if (window.matchMedia && window.matchMedia('(prefers-color-scheme: light)').matches) {
+        rootElement.setAttribute('data-theme', 'light');
+    }
+
+    if (themeToggle) {
+        themeToggle.addEventListener('click', () => {
+            if (rootElement.getAttribute('data-theme') === 'light') {
+                rootElement.removeAttribute('data-theme');
+                localStorage.setItem('theme', 'dark');
+            } else {
+                rootElement.setAttribute('data-theme', 'light');
+                localStorage.setItem('theme', 'light');
+            }
+        });
+    }
 });
 
 // Copy Email logic
