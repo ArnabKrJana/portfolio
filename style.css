@@ -125,34 +125,36 @@ html {
     height: 100%;
     z-index: 0;
     background-color: var(--bg-primary);
+    background-image:
+        radial-gradient(circle at 20% 30%, rgba(14, 165, 233, 0.4), transparent 50%),
+        radial-gradient(circle at 80% 20%, rgba(139, 92, 246, 0.35), transparent 50%),
+        radial-gradient(circle at 50% 80%, rgba(236, 72, 153, 0.3), transparent 50%);
 }
 
-/* Background Overlay to ensure text readability without blurring WebGL */
+[data-theme="light"] .bg-container {
+    background-image:
+        radial-gradient(circle at 20% 30%, rgba(14, 165, 233, 0.5), transparent 50%),
+        radial-gradient(circle at 80% 20%, rgba(168, 85, 247, 0.4), transparent 50%),
+        radial-gradient(circle at 50% 80%, rgba(244, 114, 182, 0.3), transparent 50%);
+}
+
+/* Background Overlay for Frosted Glass Effect */
 .bg-container::after {
     content: '';
     position: absolute;
     inset: 0;
     z-index: 1;
-    /* Radial gradient to fade out the edges and create a subtle vignette */
-    background: radial-gradient(circle at center, transparent 0%, var(--bg-primary) 90%);
+    backdrop-filter: blur(100px);
+    -webkit-backdrop-filter: blur(100px);
+    background: rgba(0, 0, 0, 0.55);
     pointer-events: none;
     transition: background 0.4s ease;
 }
 
 [data-theme="light"] .bg-container::after {
-    /* White radial vignette in light mode */
-    background: radial-gradient(circle at center, rgba(255, 255, 255, 0.4) 0%, rgba(255, 255, 255, 0.95) 100%);
+    background: rgba(255, 255, 255, 0.35);
+    /* Premium frosted white look */
 }
-
-.hero-bg-img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    opacity: 0.3;
-    /* Low opacity to ensure text is highly visible */
-}
-
-
 
 /* Navbar */
 .navbar {
@@ -167,17 +169,17 @@ html {
     width: 100%;
     max-width: 100%;
     z-index: 990;
-    
+
     /* Liquid Glass Effect */
     background-color: var(--nav-bg);
     backdrop-filter: blur(24px) saturate(180%);
     -webkit-backdrop-filter: blur(24px) saturate(180%);
-    
+
     border: 1px solid transparent;
     border-bottom: 1px solid var(--nav-border);
     border-radius: 0;
     box-shadow: none;
-    
+
     /* Honey/Dense Droplet Viscous Animation (Faster/Snappier) */
     transition: all 0.35s cubic-bezier(0.2, 0.8, 0.2, 1);
 }
@@ -229,22 +231,23 @@ html {
     width: 92px;
     height: 38px;
     border-radius: 30px;
-    background: rgba(255, 255, 255, 0.1);
-    border: 1px solid rgba(255, 255, 255, 0.1);
-    box-shadow: inset 0 2px 10px rgba(0,0,0,0.5);
+    background: linear-gradient(135deg, rgba(14, 165, 233, 0.2), rgba(139, 92, 246, 0.2), rgba(236, 72, 153, 0.2));
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    box-shadow: inset 0 2px 10px rgba(0, 0, 0, 0.5);
     display: flex;
     align-items: center;
     cursor: pointer;
     overflow: visible;
     padding: 0;
     transition: all 0.4s ease;
-    margin-right: 1rem; /* spacing from hamburger menu on mobile */
+    margin-right: 1rem;
+    /* spacing from hamburger menu on mobile */
 }
 
 [data-theme="light"] .theme-toggle {
-    background: rgba(0, 0, 0, 0.03);
-    border-color: rgba(0, 0, 0, 0.05);
-    box-shadow: inset 0 2px 5px rgba(0,0,0,0.05);
+    background: linear-gradient(135deg, rgba(14, 165, 233, 0.15), rgba(168, 85, 247, 0.15), rgba(244, 114, 182, 0.15));
+    border-color: rgba(0, 0, 0, 0.08);
+    box-shadow: inset 0 2px 5px rgba(0, 0, 0, 0.05);
 }
 
 .toggle-text {
@@ -265,33 +268,44 @@ html {
 }
 
 /* Hide/show text based on theme */
-:root:not([data-theme="light"]) .light-text { opacity: 0; transform: translateX(5px); }
-[data-theme="light"] .dark-text { opacity: 0; transform: translateX(-5px); }
+:root:not([data-theme="light"]) .light-text {
+    opacity: 0;
+    transform: translateX(5px);
+}
+
+[data-theme="light"] .dark-text {
+    opacity: 0;
+    transform: translateX(-5px);
+}
 
 .toggle-thumb {
     position: absolute;
-    left: -4px; /* Extends slightly out */
+    left: -4px;
+    /* Extends slightly out */
     width: 46px;
     height: 46px;
     border-radius: 50%;
-    background: rgba(11, 9, 10, 0.6); /* Dark glass by default */
+    background: rgba(11, 9, 10, 0.6);
+    /* Dark glass by default */
     backdrop-filter: blur(16px);
     -webkit-backdrop-filter: blur(16px);
     border: 1px solid rgba(255, 255, 255, 0.1);
-    box-shadow: 0 4px 15px rgba(0,0,0,0.5), inset 0 2px 5px rgba(255,255,255,0.15);
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5), inset 0 2px 5px rgba(255, 255, 255, 0.15);
     display: flex;
     align-items: center;
     justify-content: center;
     transition: transform 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275), background 0.4s ease, box-shadow 0.4s ease;
     z-index: 2;
-    transform: translateX(54px); /* Starts on right in dark mode */
+    transform: translateX(54px);
+    /* Starts on right in dark mode */
 }
 
 [data-theme="light"] .toggle-thumb {
-    transform: translateX(0); /* Moves to left in light mode */
+    transform: translateX(0);
+    /* Moves to left in light mode */
     background: rgba(255, 255, 255, 0.7);
     border-color: rgba(255, 255, 255, 0.8);
-    box-shadow: 0 4px 15px rgba(0,0,0,0.15), inset 0 2px 10px rgba(255,255,255,1);
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15), inset 0 2px 10px rgba(255, 255, 255, 1);
 }
 
 /* Icons inside thumb */
@@ -303,17 +317,34 @@ html {
 }
 
 /* Icon visibility */
-:root:not([data-theme="light"]) .sun-icon { opacity: 0; transform: scale(0.5) rotate(-90deg); }
-:root:not([data-theme="light"]) .moon-icon { opacity: 1; transform: scale(1) rotate(0); color: #ffffff; }
+:root:not([data-theme="light"]) .sun-icon {
+    opacity: 0;
+    transform: scale(0.5) rotate(-90deg);
+}
 
-[data-theme="light"] .sun-icon { opacity: 1; transform: scale(1) rotate(0); color: #000000; }
-[data-theme="light"] .moon-icon { opacity: 0; transform: scale(0.5) rotate(90deg); }
+:root:not([data-theme="light"]) .moon-icon {
+    opacity: 1;
+    transform: scale(1) rotate(0);
+    color: #ffffff;
+}
+
+[data-theme="light"] .sun-icon {
+    opacity: 1;
+    transform: scale(1) rotate(0);
+    color: #000000;
+}
+
+[data-theme="light"] .moon-icon {
+    opacity: 0;
+    transform: scale(0.5) rotate(90deg);
+}
 
 .theme-toggle:hover .toggle-thumb {
-    box-shadow: 0 6px 20px rgba(0,0,0,0.6), inset 0 2px 5px rgba(255,255,255,0.25);
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.6), inset 0 2px 5px rgba(255, 255, 255, 0.25);
 }
+
 [data-theme="light"] .theme-toggle:hover .toggle-thumb {
-    box-shadow: 0 6px 20px rgba(0,0,0,0.2), inset 0 2px 10px rgba(255,255,255,1);
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.2), inset 0 2px 10px rgba(255, 255, 255, 1);
 }
 
 .menu-toggle {
@@ -323,7 +354,8 @@ html {
 
 /* Hero Section */
 .hero {
-    height: 100vh;
+    min-height: 100vh;
+    height: 100dvh;
     display: flex;
     align-items: center;
     padding: 0 4rem;
@@ -609,6 +641,26 @@ footer {
     transform: translateY(0);
 }
 
+@media (prefers-reduced-motion: reduce) {
+    html {
+        scroll-behavior: auto;
+    }
+
+    *,
+    *::before,
+    *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        scroll-behavior: auto !important;
+        transition-duration: 0.01ms !important;
+    }
+
+    .fade-in {
+        opacity: 1;
+        transform: none;
+    }
+}
+
 /* Responsive */
 @media (max-width: 1024px) {
     .hero-title {
@@ -633,14 +685,15 @@ footer {
     .navbar {
         padding: 1.25rem 1.5rem;
     }
-    
+
     .navbar.scrolled {
         width: 95%;
         padding: 0.8rem 1.5rem;
     }
 
     .nav-controls {
-        gap: 0.75rem; /* Tighter gap on mobile */
+        gap: 0.75rem;
+        /* Tighter gap on mobile */
     }
 
     .theme-toggle {
@@ -656,11 +709,13 @@ footer {
     }
 
     .theme-toggle .toggle-thumb {
-        transform: translateX(44px); /* Start on right for dark mode (76 - 38 + 6) */
+        transform: translateX(44px);
+        /* Start on right for dark mode (76 - 38 + 6) */
     }
 
     [data-theme="light"] .theme-toggle .toggle-thumb {
-        transform: translateX(0); /* Left for light mode */
+        transform: translateX(0);
+        /* Left for light mode */
     }
 
     .dark-text {
