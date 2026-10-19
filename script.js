@@ -1,5 +1,33 @@
 document.addEventListener('DOMContentLoaded', () => {
 
+    // Smooth scrolling animation (ease-in-and-out) on mouse scroll using Lenis
+    let lenis = null;
+    const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+    // Easing curve: Ease-In-Out Cubic (gentle start, fluid momentum, graceful decelerated stop)
+    const easeInOutCubic = (t) => (t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2);
+
+    if (!prefersReducedMotion && typeof Lenis !== 'undefined') {
+        lenis = new Lenis({
+            duration: 0.75,
+            easing: easeInOutCubic,
+            orientation: 'vertical',
+            gestureOrientation: 'vertical',
+            smoothWheel: true,
+            wheelMultiplier: 1.0,
+            touchMultiplier: 1.5,
+            infinite: false,
+        });
+
+        window.lenis = lenis;
+
+        function raf(time) {
+            lenis.raf(time);
+            requestAnimationFrame(raf);
+        }
+        requestAnimationFrame(raf);
+    }
+
     // Scroll reveal animation using Intersection Observer
     const observerOptions = {
         root: null,
@@ -80,10 +108,18 @@ document.addEventListener('DOMContentLoaded', () => {
 
             const targetElement = document.querySelector(targetId);
             if (targetElement) {
-                targetElement.scrollIntoView({
-                    behavior: 'smooth',
-                    block: 'start'
-                });
+                if (lenis) {
+                    lenis.scrollTo(targetElement, {
+                        offset: -80,
+                        duration: 1.2,
+                        easing: easeInOutCubic
+                    });
+                } else {
+                    targetElement.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
             }
         });
     });
@@ -157,16 +193,30 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }, { passive: true });
 
+    if (lenis) {
+        lenis.on('scroll', () => {
+            updateScrollSpy();
+            updatePageChrome();
+        });
+    }
+
     updateScrollSpy();
     updatePageChrome();
 
     scrollTopBtn.addEventListener('click', () => {
-        window.scrollTo({
-            top: 0,
-            behavior: 'smooth'
-        });
+        if (lenis) {
+            lenis.scrollTo(0, {
+                duration: 1.2,
+                easing: easeInOutCubic
+            });
+        } else {
+            window.scrollTo({
+                top: 0,
+                behavior: 'smooth'
+            });
+        }
     });
-    
+
     // Theme Toggle Logic
     const themeToggle = document.getElementById('theme-toggle');
     const rootElement = document.documentElement; // html tag
