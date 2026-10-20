@@ -9,12 +9,12 @@ document.addEventListener('DOMContentLoaded', () => {
 
     if (!prefersReducedMotion && typeof Lenis !== 'undefined') {
         lenis = new Lenis({
-            duration: 0.75,
+            duration: 1.0,
             easing: easeInOutCubic,
             orientation: 'vertical',
             gestureOrientation: 'vertical',
             smoothWheel: true,
-            wheelMultiplier: 1.0,
+            wheelMultiplier: 2.0,
             touchMultiplier: 1.5,
             infinite: false,
         });
